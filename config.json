@@ -1,0 +1,52 @@
+{
+  "port": 4567,
+  "host": "0.0.0.0",
+  "refreshMinutes": 60,
+  "assetTtlHours": 6,
+  "prewarmJars": true,
+
+  "dedupeByName": true,
+  "jarPolicy": "vote",
+  "siteJarInject": true,
+  "maxSites": 0,
+  "maxLives": 60,
+  "maxParses": 80,
+
+  "proxy": true,
+  "proxyLives": true,
+  "mirrors": ["https://gh-proxy.org/"],
+  "skipDirectHosts": ["raw.githubusercontent.com"],
+
+  "upstreams": [
+    {
+      "name": "家庭电视版(日更探活)",
+      "url": "https://cdn.jsdelivr.net/gh/hesanyue50-lang/tvbox-config@main/sources/qist-jsm.json",
+      "enabled": true
+    },
+    {
+      "name": "日更合并(含直播)",
+      "url": "https://cdn.jsdelivr.net/gh/hubeizgd1979/tvbox-config@main/dist/config.json",
+      "enabled": true
+    },
+    {
+      "name": "聚合大仓",
+      "url": "https://cdn.jsdelivr.net/gh/hesanyue50-lang/tvbox-config@main/sources/lightconer.json",
+      "enabled": true
+    },
+    {
+      "name": "实时聚合(822站,带延迟标注)",
+      "url": "https://cdn.jsdelivr.net/gh/qiuzhu682003/tvbox@main/tvbox.json",
+      "enabled": true
+    },
+    {
+      "name": "日聚合精选(短剧/官源)",
+      "url": "https://cdn.jsdelivr.net/gh/hanyurn/tvbox-config@main/agg_true.json",
+      "enabled": true
+    },
+    {
+      "name": "推荐大合集(1630站,量大较慢)",
+      "url": "https://cdn.jsdelivr.net/gh/hebijunge/tvbox-config@main/tvbox_recommended.json",
+      "enabled": false
+    }
+  ]
+}

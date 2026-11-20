@@ -1,0 +1,14 @@
+{
+  "name": "tvbox-aggregator",
+  "version": "1.0.0",
+  "description": "TVBox 聚合源本地服务（零依赖 Node.js）：多上游合并去重 + 资产代理加速",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "license": "MIT"
+}

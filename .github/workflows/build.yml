@@ -1,0 +1,81 @@
+name: build-config
+
+# 定时把上游配置聚合成 dist/config.json（纯静态产物，电视经 jsDelivr 等地址访问）
+# 与本地模式共用 config.json —— 改上游列表 push 上来即自动重建
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'config.json'
+      - 'lib/**'
+      - 'scripts/**'
+      - '.github/workflows/build.yml'
+  workflow_dispatch: {}        # 支持在 Actions 页面手动触发
+  schedule:
+    - cron: '17 * * * *'       # 每小时 17 分（错开整点高峰）
+
+permissions:
+  contents: write              # 允许把构建产物提交回仓库
+
+concurrency:
+  group: build-config
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      REPO: ${{ github.repository }}   # 供「提交产物」「purge」两个步骤共用
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: 聚合构建
+        run: node scripts/build-static.js --repo "$REPO"
+
+      - name: 提交产物
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add dist/
+          if git diff --cached --quiet; then
+            echo "配置无变化，跳过提交"
+          else
+            git commit -m "chore: rebuild aggregated config [skip ci]"
+            git push
+          fi
+
+      - name: 刷新 jsDelivr 缓存（让新配置尽快生效）
+        run: |
+          echo "purge: https://purge.jsdelivr.net/gh/${REPO}@main/dist/config.json"
+          curl -fsS --max-time 30 "https://purge.jsdelivr.net/gh/${REPO}@main/dist/config.json" || echo "(purge 失败不影响构建，jsDelivr 缓存最长几小时后自动过期)"
+
+      # 构建完在运行页 Summary 直接给出可复制的电视端地址（代码块自带复制按钮）
+      - name: 电视端地址（显示在本页 Summary）
+        if: always()
+        run: |
+          {
+            echo '## 📺 电视端配置地址（复制即用）'
+            echo ''
+            echo '**主选 · jsDelivr（国内推荐）**'
+            echo ''
+            echo '```'
+            echo "https://cdn.jsdelivr.net/gh/${REPO}@main/dist/config.json"
+            echo '```'
+            echo ''
+            echo '**备用 · gh-proxy 加速（无缓存，永远最新）**'
+            echo ''
+            echo '```'
+            echo "https://gh-proxy.com/https://raw.githubusercontent.com/${REPO}/main/dist/config.json"
+            echo '```'
+            echo ''
+            echo '> 浏览器打开能看到 JSON 即可用：TVBox → 设置 → 配置地址，粘贴主选地址。'
+            echo '> jsDelivr 还是旧内容时，等几分钟或访问一次 purge 地址强制刷新：'
+            echo "> \`https://purge.jsdelivr.net/gh/${REPO}@main/dist/config.json\`"
+            node -e "try{const s=JSON.parse(require('fs').readFileSync('dist/status.json','utf8'));console.log('');console.log(\`**本次构建**：\${s.merged.sites} 站 / \${s.merged.lives} 直播组 / \${s.merged.parses} 解析，上游 \${s.upstreams.filter(u=>u.ok).length}/\${s.upstreams.length} 在线\`)}catch(e){}"
+          } >> "$GITHUB_STEP_SUMMARY"
