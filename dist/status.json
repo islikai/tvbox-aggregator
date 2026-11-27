@@ -1,6 +1,6 @@
 {
-  "builtAt": "2026-11-27T08:23:10.566Z",
-  "durationMs": 1225,
+  "builtAt": "2026-11-27T18:55:25.479Z",
+  "durationMs": 1387,
   "address": {
     "jsdelivr": "https://cdn.jsdelivr.net/gh/islikai/tvbox-aggregator@main/dist/config.json",
     "ghproxy": "https://gh-proxy.com/https://raw.githubusercontent.com/islikai/tvbox-aggregator/main/dist/config.json",
@@ -8,20 +8,10 @@
   },
   "upstreams": [
     {
-      "name": "聚合大仓",
-      "url": "https://cdn.jsdelivr.net/gh/hesanyue50-lang/tvbox-config@main/sources/lightconer.json",
-      "ok": true,
-      "ms": 347,
-      "count": {
-        "sites": 484,
-        "lives": 20
-      }
-    },
-    {
       "name": "家庭电视版(日更探活)",
       "url": "https://cdn.jsdelivr.net/gh/hesanyue50-lang/tvbox-config@main/sources/qist-jsm.json",
       "ok": true,
-      "ms": 1028,
+      "ms": 332,
       "count": {
         "sites": 148,
         "lives": 2
@@ -31,7 +21,7 @@
       "name": "日更合并(含直播)",
       "url": "https://cdn.jsdelivr.net/gh/hubeizgd1979/tvbox-config@main/dist/config.json",
       "ok": true,
-      "ms": 706,
+      "ms": 301,
       "count": {
         "sites": 164,
         "lives": 35
@@ -41,55 +31,65 @@
       "name": "日聚合精选(短剧/官源)",
       "url": "https://cdn.jsdelivr.net/gh/hanyurn/tvbox-config@main/agg_true.json",
       "ok": true,
-      "ms": 394,
+      "ms": 236,
       "count": {
         "sites": 98,
         "lives": 11
       }
     },
     {
+      "name": "聚合大仓",
+      "url": "https://cdn.jsdelivr.net/gh/hesanyue50-lang/tvbox-config@main/sources/lightconer.json",
+      "ok": true,
+      "ms": 711,
+      "count": {
+        "sites": 484,
+        "lives": 20
+      }
+    },
+    {
       "name": "实时聚合(822站,带延迟标注)",
       "url": "https://cdn.jsdelivr.net/gh/qiuzhu682003/tvbox@main/tvbox.json",
       "ok": true,
-      "ms": 823,
+      "ms": 1341,
       "count": {
-        "sites": 746,
-        "lives": 492
+        "sites": 810,
+        "lives": 450
       }
     }
   ],
   "merged": {
-    "sites": 1338,
+    "sites": 1333,
     "lives": 44,
     "parses": 80,
-    "dupKey": 289,
-    "dupName": 13,
+    "dupKey": 344,
+    "dupName": 27,
     "spiderSource": "实时聚合(822站,带延迟标注)",
     "perOrigin": [
       {
-        "name": "聚合大仓",
-        "kept": 474,
-        "csp": 463
-      },
-      {
         "name": "家庭电视版(日更探活)",
-        "kept": 130,
-        "csp": 130
+        "kept": 148,
+        "csp": 144
       },
       {
         "name": "日更合并(含直播)",
-        "kept": 77,
-        "csp": 60
+        "kept": 161,
+        "csp": 144
       },
       {
         "name": "日聚合精选(短剧/官源)",
-        "kept": 50,
-        "csp": 24
+        "kept": 90,
+        "csp": 64
+      },
+      {
+        "name": "聚合大仓",
+        "kept": 318,
+        "csp": 311
       },
       {
         "name": "实时聚合(822站,带延迟标注)",
-        "kept": 607,
-        "csp": 569
+        "kept": 616,
+        "csp": 576
       }
     ]
   }
